@@ -1,0 +1,67 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+// PLUGIN PUBLISH
+//================
+apply plugin: 'maven-publish'
+
+// Dependencies
+// ------------
+repositories {
+    mavenCentral()
+    maven {
+        url "https://raw.github.com/Appdynamics/artifact-library/master/repo/"
+    }
+}
+
+compileJava {
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+   // options.bootClasspath = "/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar"
+}
+
+
+//Add CLIAPI to Dependencies (make sure it'll be picked up by Dist and Application
+dependencies {
+    compile 'commons-cli:commons-cli:1.2'
+    testCompile   "org.testng:testng:6.8.7"
+}
+
+
+// Setup IDEA
+idea{
+    module {
+        excludeDirs += file('gradle')
+        excludeDirs += file('.idea')
+        excludeDirs.remove(file("build"))
+    }
+}
+
+// Switch to TestNG
+tasks.test.useTestNG()
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
+
+
+group = 'com.appdynamics.ace.cli'
+version = '1.1'
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId project.name
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "file:////vlab/maven/artifact-library/repo"
+        }
+    }
+}
+
+
