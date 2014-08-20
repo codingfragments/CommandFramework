@@ -31,6 +31,7 @@ public class OptionWrapper {
         else return defaultValue;
     }
 
+    public String[] getArgs() { return _cmd.getArgs();}
     public CommandlineExecution getCommandEcecution() {
         return _commandExecution;
     }
