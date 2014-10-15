@@ -25,6 +25,11 @@ public class OptionWrapper {
     public String getOptionValue(String name) {
         return _cmd.getOptionValue(name);
     }
+    public String[] getOptionValues(String name) {
+
+        return _cmd.getOptionValues(name);
+    }
+
 
     public String getOptionValue(String name, String defaultValue) {
         if (hasOption(name)) return getOptionValue(name);
