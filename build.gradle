@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
@@ -25,6 +26,7 @@ compileJava {
 //Add CLIAPI to Dependencies (make sure it'll be picked up by Dist and Application
 dependencies {
     compile 'commons-cli:commons-cli:1.2'
+    compileOnly 'org.codehaus.groovy:groovy-all:2.4.6'
     testCompile   "org.testng:testng:6.8.7"
 }
 
@@ -47,7 +49,7 @@ task wrapper(type: Wrapper) {
 
 
 group = 'com.appdynamics.ace.cli'
-version = '1.4'
+version = '1.5'
 
 
 publishing {
