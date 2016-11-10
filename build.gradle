@@ -11,9 +11,8 @@ apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 
 
-
 group = 'com.appdynamics.ace.cli'
-version = '1.6'
+version = '1.6.1'
 
 // START Bintray Publishing
 // -------------------------
@@ -72,6 +71,13 @@ repositories {
     maven {
         url "https://raw.github.com/Appdynamics/artifact-library/master/repo/"
     }
+}
+
+
+
+compileGroovy {
+    sourceCompatibility=1.6
+    targetCompatibility=1.6
 }
 
 compileJava {

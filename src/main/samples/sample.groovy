@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-@Grab(group='com.appdynamics.ace.cli', module='CommandFramework', version='1.6')
+@Grab(group='com.appdynamics.ace.cli', module='CommandFramework', version='1.6.1')
 import com.appdynamics.ace.util.cli.api.api.CommandlineExecution
 import com.appdynamics.ace.util.cli.api.groovy.CommandWrapper
 
