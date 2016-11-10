@@ -25,6 +25,16 @@ public class CommandlineExecution {
     private boolean _debug;
     private boolean _helpVerboseEnabled;
 
+    public boolean isUseMainOnly() {
+        return useMainOnly;
+    }
+
+    public void setUseMainOnly(boolean useMainOnly) {
+        this.useMainOnly = useMainOnly;
+    }
+
+    private boolean useMainOnly = true;
+
 
     public CommandlineExecution(String name)  {
 
@@ -58,6 +68,27 @@ public class CommandlineExecution {
 
     public int execute(String[] args)  {
         Command cmd = null;
+
+        if (_commands.size() == 1 && useMainOnly) {
+            cmd = (Command) _commands.values().toArray()[0];
+            String [] argsTemp = new String[args.length+1];
+
+            if (args.length>0 ) {
+                if (! cmd.getName().equals(args[0]) && !args[0].equals(CONST_CMD_HELP)) {
+                    argsTemp[0] = cmd.getName();
+                    for (int i = 0; i < args.length;i++) {
+                        argsTemp[i+1] = args [i];
+                    }
+
+                    args=argsTemp;
+                }
+            } else {
+                argsTemp [0] = cmd.getName();
+                args = argsTemp;
+            }
+
+        }
+
         if (args.length >0) cmd = getCommand(args[0]);
         else cmd = getCommand(CONST_CMD_HELP);
 

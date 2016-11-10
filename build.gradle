@@ -1,11 +1,69 @@
+plugins {
+    id "com.jfrog.bintray" version "1.7"
+}
+
 apply plugin: 'java'
 apply plugin: 'groovy'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+
 
 // PLUGIN PUBLISH
 //================
 apply plugin: 'maven-publish'
+
+
+
+group = 'com.appdynamics.ace.cli'
+version = '1.6'
+
+// START Bintray Publishing
+// -------------------------
+
+bintray {
+    user = "$bintrayUser"
+    key = "$bintrayKey"
+    publish = true
+
+
+
+    pkg {
+        repo = 'APMCentral-Public'
+        name = "${group}.${project.name}"
+        licenses = ['LGPL-3.0']
+        vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+
+        version {
+            name = "${project.version}"
+        }
+    }
+
+    publications = ['bintray']
+}
+
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+publishing {
+    publications {
+        bintray(MavenPublication) {
+            from components.java
+            groupId "$group"
+            artifactId project.name
+            version "${version}"
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+// STOP BINTRAY Plugin
+// --------------------
+
+
+
+
 
 // Dependencies
 // ------------
@@ -31,14 +89,7 @@ dependencies {
 }
 
 
-// Setup IDEA
-idea{
-    module {
-        excludeDirs += file('gradle')
-        excludeDirs += file('.idea')
-        excludeDirs.remove(file("build"))
-    }
-}
+
 
 // Switch to TestNG
 tasks.test.useTestNG()
@@ -48,8 +99,7 @@ task wrapper(type: Wrapper) {
 }
 
 
-group = 'com.appdynamics.ace.cli'
-version = '1.5'
+
 
 
 publishing {
@@ -65,5 +115,7 @@ publishing {
         }
     }
 }
+
+
 
 
